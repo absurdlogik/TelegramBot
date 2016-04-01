@@ -23,13 +23,13 @@ def send_now(message):
     msg = bot.send_message(message.chat.id, texts.get_time())
 
 
-@bot.message_handler(commands=[])
+@bot.message_handler(func=lambda message: True)
 def send_error(message):
-    msg = bot.send_message(message.chat.id, texts.error_msg)
-
-@bot.message_handler()
-def send_text(message):
-    msg = bot.send_message(message.chat.id, texts.text_msg)
+    msg = str(message.text)
+    if msg[0] == '/':
+        msg = bot.send_message(message.chat.id, texts.error_msg)
+    else:
+        msg = bot.send_message(message.chat.id, texts.text_msg)
 
 
 if __name__ == '__main__':
